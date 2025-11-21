@@ -1,40 +1,75 @@
-import { use, useState } from "react";
+import { useState } from "react";
 
 function Form() {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
-  const [showMsg, setShowMsg] = useState(false);
+  const [feedback, setFeedback] = useState("");
+  const [inputName, setInputName] = useState("");
+  const [inputEmail, setInputEmail] = useState("");
+  const [inputFeedback, setInputFeedback] = useState("");
 
-  function ButtonHandler(e) {
-    e.preventDefault();
-    setShowMsg(true);
+  function NameListener(e) {
+    setInputName(e.target.value);
+  }
+
+  function EmailListener(e) {
+    setInputEmail(e.target.value);
+  }
+
+  function FeedbackListener(e) {
+    setInputFeedback(e.target.value);
+  }
+
+  function ButtonHandler() {
+    setName(inputName);
+    setEmail(inputEmail);
+    setFeedback(inputFeedback);
   }
 
   return (
-    <div className="flex flex-col items-center justify-center h-[100vh] bg-black text-white text-4xl font-bold">
-      <h1 className="mb-3">React Form</h1>
-
-      <form>
-        <label className="text-2xl pr-3">Name</label>
-        <input
-          type="text"
-          placeholder="What's your name?"
-          value={name}
-          onChange={(e) => setName(e.target.value)}
-        />
-        <label>Email</label>
-        <input
-          type="text"
-          placeholder="Enter your Email Address"
-          value={email}
-          onChange={(e) => setEmail(e.target.value)}
-        />
-        <button onClick={ButtonHandler}>Submit</button>
-      </form>
-      {showMsg && (
+    <div className="flex flex-col justify-center items-center h-[100vh] bg-slate-400 min-h-screen">
+      <label htmlFor="name" className="my-3">
+        Name:{" "}
+      </label>
+      <input
+        type="text"
+        placeholder="What's your name?"
+        value={inputName}
+        onChange={NameListener}
+        className="text-center border border-black w-[350px] h-[40px]"
+      />
+      <label htmlFor="email" className="my-3">
+        Email:{" "}
+      </label>
+      <input
+        type="email"
+        placeholder="What's your email address?"
+        value={inputEmail}
+        onChange={EmailListener}
+        className="text-center border border-black w-[350px] h-[40px]"
+      />
+      <label htmlFor="feedback" className="my-3">
+        Feedback:{" "}
+      </label>
+      <textarea
+        placeholder="Give us feedback!"
+        value={inputFeedback}
+        onChange={FeedbackListener}
+        className="text-center w-[350px] h-[120px] border border-black"
+      />
+      <button
+        onClick={ButtonHandler}
+        className="hover:cursor-pointer border border-black my-3 p-3"
+      >
+        Submit
+      </button>
+      {name && email && feedback && (
         <>
-          <p>Hello {name}</p>
-          <p>Your email is: {email}</p>
+          <div className="my-3 text-center space-y-5">
+            <p>Hello {name}</p>
+            <p>Your Email is: {email}</p>
+            <p>Your feedback is: {feedback}</p>
+          </div>
         </>
       )}
     </div>
